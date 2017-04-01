@@ -1,0 +1,65 @@
+$button-color : rgb(0,135,192)
+.signupContainer
+  user-select: none
+  display: flex
+  height: 100%
+  flex-direction: column
+  padding: 20px
+  background-color: rgba(56, 56, 59, 0.06)
+  border-radius: 10px
+  .chooseHero
+    display: flex
+    align-items: center
+    flex-direction: column
+    margin: 10px
+    .mainHeroContainer
+      color: rgba(22, 109, 164, 0.88)
+      width: 100%
+      font-weight: bold
+      text-align: center
+      .mainHero
+        max-height: 20vw
+        animation: show 1s forwards
+
+    .miniHeroContainer
+      width: 100%
+      display: flex
+      margin-top: 30px
+      justify-content: space-between
+      .miniHero
+        max-height: 7vw
+        transition: 0.1s
+        &:hover
+          cursor: pointer
+          transform: scale(1.2)
+
+  .button
+    align-self: flex-end
+    background: $button-color
+    width: 80px
+    float: right
+    margin-right: 20px
+    height: 40px
+    box-decoration-break: none
+    border-style: none
+    border-radius: 10px
+    color: white
+    font-style: oblique
+    font-size: 1.1em
+    margin-top: 50px
+    &.selectHero
+      animation: show 0.5s forwards
+    &:hover
+      cursor: pointer
+      background: $button-color * 1.1
+      box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75)
+    &:active
+      box-sizing:content-box
+
+@keyframes show
+  0%
+    opacity: 0
+    transform: scale(0)
+  100%
+    opacity: 1
+    transform: scale(1)
