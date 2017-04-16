@@ -7,10 +7,6 @@ import Info from './info'
 import Age from './age'
 import Hero from './hero'
 import './style.css'
-// import Info from './info'
-// import Age from './age'
-// import Hero from './hero'
-// import Confirm from './confirm'
 
 import {
   Step,
