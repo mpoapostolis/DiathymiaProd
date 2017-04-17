@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 import FontIcon from 'material-ui/FontIcon'
 import Avatar from 'material-ui/Avatar';
+import { browserHistory } from 'react-router'
 import Chip from 'material-ui/Chip';
 import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import './style.css'
@@ -15,7 +16,7 @@ const style = {
     background: 'rgba(38, 121, 208, 0.23)',
   },
   userAvatar: {
-    background: 'rgba(9, 49, 92, 0.12)',
+    background: 'rgba(84, 134, 184, 0.35)',
   },
   chip: (isHero) => {
     return {
@@ -23,22 +24,32 @@ const style = {
       width: '300px',
       paddingLeft: '5px',
       margin: '0 15px 0 15px',
-      background: isHero ? 'rgba(38, 121, 208, 0.12)' : 'rgba(9, 49, 92, 0.12)',
+      background: isHero ? 'rgba(38, 121, 208, 0.12)' : 'rgba(84, 134, 184, 0.35)',
     }
   }
 }
 
 class Chat extends React.Component {
-  state ={
-    arr: []
-  }
   renHero(hero){
-    const { arr } = this.state
-    const tmpArr = arr
-    const answers = ['ποτε', 'συχνα', 'συνέχεια']
+    const { chatArr, num, calcRes } = this.props
+    const isEnd = num > 19
+    const revArr = [3, 4, 9, 17, 18]
+    const isReverse = (key) =>  revArr.indexOf(key) + 1
+    const canAnswer = chatArr.length % 2 !== 0
+    const answers = isEnd ? [{text: 'τελος'}] : [ {text: 'ποτε', value: isReverse(num) ? 2 : 0 }, { text: 'συχνα', value: 1 }, {text: 'συνέχεια', value: isReverse(num) ? 0 : 2 }]
     return <div className='mainHero'>
-      <div className='answers'>
-        {answers.map( (answ, key) => <div onClick = {()=> { tmpArr.push(answ); this.setState({arr: tmpArr}) }} key = {key} className='answer'> {answ} </div> )}
+      <div className={`answers`}>
+        {answers.map( (obj, key) => <div onClick = {()=> {
+          if (isEnd) {
+            calcRes()
+            return browserHistory.push('/')
+          }
+          canAnswer &&  this.props.answer({ text: obj.text, value: obj.value });
+          setTimeout(()=>{
+            canAnswer && this.props.nextQ()
+          }, 500)
+        }}
+        key = {key} className={`answer ${canAnswer ? '': 'locked'}`}> {obj.text} </div> )}
       </div>
       <div className = 'hero'>
         <img  className={`hero`} src={`/images/${hero}.png`} />
@@ -51,21 +62,23 @@ class Chat extends React.Component {
     return <div key={key} className={`message ${isHero ? 'hero' : 'user' }`}>
       {isHero ? <Avatar size={50} style ={style.heroAvatar} src={`/images/${hero}.png`} /> : null}
       <Chip style ={style.chip(isHero)}>
-        <div style={{ whiteSpace:'normal', padding:'10px' }}>
+        <div style={{ fontWeight:'bold', color: isHero ? 'rgba(0, 0, 0, 0.68)' : 'white', whiteSpace:'normal', padding:'10px' }}>
           {answ}
         </div>
       </Chip>
-      {!isHero ? <Avatar size={50} style ={style.userAvatar} src={`/images/${hero}.png`} /> : null}
+      {!isHero ? <Avatar size={50} style ={style.userAvatar} icon={<FontIcon  style={{textAlign:'center', color:'rgba(84, 134, 184, 0.45)'}} className='fa fa-user' />} /> : null}
     </div>
+  }
+  componentDidMount(){
+    this.props.initChat()
   }
 
   render () {
-    const { hero } = this.props
-    const { arr } = this.state
+    const { hero, chatArr } = this.props
     return <div className='chatContainer'>
         {this.renHero(hero)}
         <div className='chatBox'>
-          <div>{ this.state.arr.map((answ, key) => this.renChat(answ, hero, key)) }</div>
+          <div>{ chatArr.map((answ, key) => this.renChat(answ, hero, key)) }</div>
         </div>
       </div>
   }
@@ -74,11 +87,17 @@ class Chat extends React.Component {
 const mapStateToProps = (state) => {
   return {
     hero: state.account.hero,
+    num: state.chat.num,
+    chatArr: state.chat.chatArr,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
+    answer: actions.answer,
+    nextQ: actions.nextQ,
+    initChat: actions.initChat,
+    calcRes: actions.calcRes
   }, dispatch)
 }
 

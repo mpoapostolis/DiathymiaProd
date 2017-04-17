@@ -6,6 +6,7 @@ const userInit = {
   doctor: '',
   hero: ''
 }
+const tas20 = require('../../public/tas20');
 
 const initialStateView = {
   drawerOpen: false,
@@ -21,6 +22,15 @@ const initialStateAccount = {
   password: '',
   gender: 'Male',
   age:8
+}
+
+const initialStateChat = {
+  chatArr: [tas20[0]],
+  answers: [],
+  alexIde: 0,
+  alexCom: 0,
+  alexExt: 0,
+  num: 0,
 }
 
 const view = (state = initialStateView, action) => {
@@ -40,6 +50,35 @@ const view = (state = initialStateView, action) => {
       return R.always(state)()
   }
 }
+
+const chat = (state = initialStateChat, action) => {
+  switch (action.type) {
+    case 'ANSWER':
+      state = R.assoc('chatArr', [...state.chatArr, action.payload.text], state)
+      state.answers= [...state.answers, action.payload.value]
+      return state
+      break;
+    case 'NEXTQ':
+      state = R.assoc('num', state.num + 1, state)
+      const whatPush = state.num > 19 ? 'this is it' : tas20[state.num]
+      state.chatArr = [...state.chatArr, whatPush]
+      return state
+      break;
+    case 'INIT_CHAT':
+      return R.always(initialStateChat)()
+    case 'RESULTS':
+      const alexIde = R.sum([state.answers[0], state.answers[2], state.answers[5], state.answers[6], state.answers[8], state.answers[12], state.answers[13]]) / 7
+      const alexCom = R.sum([state.answers[1], state.answers[3], state.answers[10], state.answers[11], state.answers[16]]) / 5
+      const alexExt = R.sum([state.answers[4], state.answers[7], state.answers[9], state.answers[14], state.answers[15], state.answers[17], state.answers[18], state.answers[19]]) / 8
+      state = R.assoc('alexIde', alexIde, state)
+      state.alexCom = alexCom
+      state.alexExt = alexExt
+      return state
+    default:
+      return R.always(state)()
+  }
+}
+
 
 const account = (state = initialStateAccount, action) => {
   switch (action.type) {
@@ -63,7 +102,8 @@ const account = (state = initialStateAccount, action) => {
 }
 const appReducer = combineReducers({
   view,
-  account
+  account,
+  chat
 })
 
 const rootReducer = (state, action) => {
