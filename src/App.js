@@ -13,6 +13,7 @@ injectTapEventPlugin()
 
 class App extends Component {
   render() {
+
     const { toggleDrawer, drawerOpen } = this.props
     return (
       <div className="App">
@@ -20,6 +21,8 @@ class App extends Component {
           {...this.props}
         />
         <div className="children">
+          <button onClick = {() => fetch('http://localhost:3001').then(res => res.json().then(data => console.log(data)))}> GET </button>
+
           {this.props.children}
         </div>
       </div>

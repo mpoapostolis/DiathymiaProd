@@ -5,6 +5,7 @@ import * as actions from '../../redux/actions'
 import FontIcon from 'material-ui/FontIcon'
 import TextField from 'material-ui/TextField'
 import './style.css'
+import { postData } from '../../utils'
 
 const style = {
   paddingTop: '25px'
@@ -19,10 +20,11 @@ class Home extends Component {
   }
 
   checkIfOk () {
-    let name = this.refs.name.input.value
-    let password = this.refs.Password.input.value
-    let repassword = this.refs.rePassword.input.value
-    if (name === '') {
+    const { nameError, passwordError } = this.state
+    const name = this.refs.name.input.value
+    const password = this.refs.Password.input.value
+    const repassword = this.refs.rePassword.input.value
+    if (!name.length ) {
       this.setState({ nameError: 'the name field cant be empty' })
       return 0
     }
@@ -30,9 +32,15 @@ class Home extends Component {
       this.setState({ passwordError: 'the passwords must be same and over 4 char' })
       return 0
     }
+    if (nameError.length ) return
     this.props.storeUsername(name)
     this.props.storePassword(password)
     this.props.nextStep()
+  }
+
+  initPass(){
+    this.refs.Password.input.value = ''
+    this.refs.rePassword.input.value = ''
   }
 
   render () {
@@ -45,7 +53,11 @@ class Home extends Component {
           underlineStyle={{ borderColor:'rgb(0,135,172)' }}
           underlineFocusStyle={{ borderColor:'rgb(0,135,192)' }}
           autoFocus
-          onFocus={() => { this.setState({ nameError: '' }) }}
+          onBlur = {() => {
+             postData('http://localhost:3001/existUsername', {name: this.refs.name.input.value})
+            .then(data => data.found && this.setState({nameError: ` Το Όνομα: ${this.refs.name.input.value} υπάρχει`}))
+          }}
+          onFocus={() => { this.initPass(); this.setState({ nameError: '' }) }}
           errorText={this.state.nameError}
           hintText='Name'
           fullWidth />
