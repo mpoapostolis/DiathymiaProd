@@ -31,7 +31,7 @@ const style = {
 
 class Chat extends React.Component {
   renHero(hero){
-    const { chatArr, num, calcRes, name } = this.props
+    const { chatArr, num, calcRes, name, loggedIn } = this.props
     const isEnd = num > 19
     const revArr = [3, 4, 9, 17, 18]
     const isReverse = (key) =>  revArr.indexOf(key) + 1
@@ -74,7 +74,9 @@ class Chat extends React.Component {
   }
 
   render () {
-    const { hero, chatArr } = this.props
+    const { hero, chatArr, loggedIn  } = this.props
+    !loggedIn ? browserHistory.push('/') : null
+
     return <div className='chatContainer'>
         {this.renHero(hero)}
         <div className='chatBox'>
@@ -90,7 +92,8 @@ const mapStateToProps = (state) => {
     num: state.chat.num,
     name: state.account.userName,
     chatArr: state.chat.chatArr,
-    chat: state.chat
+    chat: state.chat,
+    loggedIn: state.view.loggedIn
   }
 }
 

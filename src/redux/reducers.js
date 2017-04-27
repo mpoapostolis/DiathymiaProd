@@ -116,9 +116,9 @@ const appReducer = combineReducers({
 
 const rootReducer = (state, action) => {
   if (action.type === 'LOGOUT') state = undefined
-  // if (action.type === 'USER_LOGIN') {
-    // state = action.payload
-  // }
+  if (action.type === 'USER_LOGIN') {
+    state.account = action.payload
+  }
   return appReducer(state, action)
 }
 

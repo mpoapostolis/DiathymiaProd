@@ -42,7 +42,14 @@ MongoClient.connect('mongodb://localhost:27017/diathymia', (err, db) => {
     users.find().toArray((err, result) => {
       res.status(200).send({result})
     })
+  })
 
+  app.post('/login', (req, res) => {
+    const name = req.body.name
+    const pass = req.body.password
+    users.find({userName: name, password: pass }).toArray((err, result) => {
+      res.status(200).send({result })
+    })
   })
 
 

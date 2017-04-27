@@ -16,7 +16,7 @@ class Results extends React.Component {
   getMean(arr, key){
     let sum = 0
     arr.map((obj)=> sum += obj[key])
-    return (sum/arr.length).toFixed(2)
+    return isNaN((sum/arr.length).toFixed(2)) ? 0 : (sum/arr.length).toFixed(2)
   }
 
   renBody(){
@@ -32,7 +32,6 @@ class Results extends React.Component {
 
   render () {
     const { users } = this.state
-    console.log(users);
     return <Table>
       <TableHeader>
         <TableRow>
