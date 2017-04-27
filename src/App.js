@@ -21,8 +21,6 @@ class App extends Component {
           {...this.props}
         />
         <div className="children">
-          <button onClick = {() => fetch('http://localhost:3001').then(res => res.json().then(data => console.log(data)))}> GET </button>
-
           {this.props.children}
         </div>
       </div>
@@ -35,7 +33,7 @@ const mapStateToProps = (state) => {
     hero: state.account.hero,
     drawerOpen: state.view.drawerOpen,
     dialogOpen: state.view.dialogOpen,
-    loggedIn: state.account.loggedIn,
+    loggedIn: state.view.loggedIn,
   }
 }
 

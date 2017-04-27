@@ -31,7 +31,7 @@ const style = {
 
 class Chat extends React.Component {
   renHero(hero){
-    const { chatArr, num, calcRes } = this.props
+    const { chatArr, num, calcRes, name } = this.props
     const isEnd = num > 19
     const revArr = [3, 4, 9, 17, 18]
     const isReverse = (key) =>  revArr.indexOf(key) + 1
@@ -41,13 +41,13 @@ class Chat extends React.Component {
       <div className={`answers`}>
         {answers.map( (obj, key) => <div onClick = {()=> {
           if (isEnd) {
-            calcRes()
+            calcRes(name)
             return browserHistory.push('/')
           }
           canAnswer &&  this.props.answer({ text: obj.text, value: obj.value });
           setTimeout(()=>{
             canAnswer && this.props.nextQ()
-          }, 500)
+          }, 0)
         }}
         key = {key} className={`answer ${canAnswer ? '': 'locked'}`}> {obj.text} </div> )}
       </div>
@@ -88,7 +88,9 @@ const mapStateToProps = (state) => {
   return {
     hero: state.account.hero,
     num: state.chat.num,
+    name: state.account.userName,
     chatArr: state.chat.chatArr,
+    chat: state.chat
   }
 }
 

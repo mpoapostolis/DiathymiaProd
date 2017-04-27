@@ -33,7 +33,7 @@ class DrawerUndockedExample extends React.Component {
 const mapStateToProps = (state) => {
   return {
     drawerOpen: state.view.drawerOpen,
-    loggedIn: state.account.loggedIn,
+    loggedIn: state.view.loggedIn,
   }
 }
 

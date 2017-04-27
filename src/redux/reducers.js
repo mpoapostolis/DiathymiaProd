@@ -12,16 +12,17 @@ const initialStateView = {
   drawerOpen: false,
   dialogOpen: false,
   signUpStep: 0,
+  loggedIn: false,
   whatDialog: ''
 }
 
 const initialStateAccount = {
   hero: 'mikasa',
-  loggedIn: false,
   userName: '',
   password: '',
   gender: 'Male',
-  age:8
+  age:8,
+  results:[],
 }
 
 const initialStateChat = {
@@ -46,6 +47,10 @@ const view = (state = initialStateView, action) => {
       return R.assoc('signUpStep', R.inc(state.signUpStep), state)
     case 'PREVSTEP':
       return R.assoc('signUpStep', R.dec(state.signUpStep), state)
+    case 'LOGIN':
+      return R.assoc('loggedIn', true, state)
+    case 'LOGOUT':
+      return R.always(state)()
     default:
       return R.always(state)()
   }
@@ -70,9 +75,16 @@ const chat = (state = initialStateChat, action) => {
       const alexIde = R.sum([state.answers[0], state.answers[2], state.answers[5], state.answers[6], state.answers[8], state.answers[12], state.answers[13]]) / 7
       const alexCom = R.sum([state.answers[1], state.answers[3], state.answers[10], state.answers[11], state.answers[16]]) / 5
       const alexExt = R.sum([state.answers[4], state.answers[7], state.answers[9], state.answers[14], state.answers[15], state.answers[17], state.answers[18], state.answers[19]]) / 8
-      state = R.assoc('alexIde', alexIde, state)
       state.alexCom = alexCom
       state.alexExt = alexExt
+      fetch('http://localhost:3001/addResult', {
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body:JSON.stringify({data: {alexIde, alexCom, answers: state.answers, alexExt}, name: action.payload})
+      })
+      state = R.assoc('alexIde', alexIde, state)
       return state
     default:
       return R.always(state)()
@@ -92,10 +104,6 @@ const account = (state = initialStateAccount, action) => {
       return R.assoc('age', action.payload, state)
     case 'STOREGENDER':
       return R.assoc('gender', action.payload, state)
-    case 'LOGIN':
-      return R.assoc('loggedIn', true, state)
-    case 'LOGOUT':
-      return R.always(state)()
     default:
       return R.always(state)()
   }

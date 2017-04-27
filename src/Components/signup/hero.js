@@ -5,6 +5,7 @@ import * as actions from '../../redux/actions'
 import FontIcon from 'material-ui/FontIcon'
 import './style.sass'
 import { browserHistory } from 'react-router'
+import { postData } from '../../utils'
 
 const heroes = ['Superman', 'Belle', 'Cinderella', 'mikasa', 'Batman', 'Snow_White', 'Spiderman']
 
@@ -13,15 +14,17 @@ class Hero extends Component {
     nextStep: React.PropTypes.func
   }
   state={
-    choose: false
+    choose: true
   }
 
   renderHero () {
+    const url = 'http://localhost:3001/addUser'
+    const { account } = this.props
     const { hero, nextStep, login } = this.props
     if (hero === '') return null
     return <div className='mainHeroContainer'>
       {this.state.choose
-        ? <button className="button selectHero" onClick={()=> { login(); browserHistory.push('/') }}>end</button>
+        ? <button className="button selectHero" onClick={()=> { postData(url, account); browserHistory.push('/chat'); login(); }}>end</button>
         : null
       }
       <p>{this.props.hero}</p>
@@ -50,7 +53,8 @@ class Hero extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    hero:state.account.hero
+    hero:state.account.hero,
+    account: state.account
   }
 }
 

@@ -6,6 +6,7 @@ import FontIcon from 'material-ui/FontIcon'
 import Info from './info'
 import Age from './age'
 import Hero from './hero'
+import { browserHistory } from 'react-router'
 import './style.css'
 
 import {
@@ -30,7 +31,8 @@ class HorizontalNonLinearStepper extends React.Component {
   }
 
   render () {
-    const { signUpStep } = this.props
+    const { signUpStep, loggedIn } = this.props
+    loggedIn ? browserHistory.push('/') : null
     return (
       <div style={{ width: '90%', marginLeft:'5%', marginTop:'20px' }} className='signupIndex'>
         <Stepper linear={false} activeStep={signUpStep}>
@@ -64,7 +66,8 @@ class HorizontalNonLinearStepper extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    signUpStep: state.view.signUpStep
+    signUpStep: state.view.signUpStep,
+    loggedIn: state.view.loggedIn
   }
 }
 

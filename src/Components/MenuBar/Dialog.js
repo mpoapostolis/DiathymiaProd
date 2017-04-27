@@ -77,7 +77,7 @@ const mapStateToProps = (state) => {
     gender: state.account.gender,
     hero: state.account.hero,
     userName: state.account.userName,
-    loggedIn: state.account.loggedIn,
+    loggedIn: state.view.loggedIn,
   }
 }
 
