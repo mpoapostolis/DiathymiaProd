@@ -15,9 +15,7 @@ app.use('/', express.static(path.join(__dirname, 'build')))
 app.use('/signup', express.static(path.join(__dirname, 'build')))
 app.use('/login', express.static(path.join(__dirname, 'build')))
 app.use('/results', express.static(path.join(__dirname, 'build')))
-app.use('/graph', express.static(path.join(__dirname, 'build')))
-app.use('/chat', express.static(path.join(__dirname, 'build')))
-app.use('/error', express.static(path.join(__dirname, 'build')))
+app.use('/static', express.static(path.join(__dirname, 'build')))
 
 MongoClient.connect('mongodb://localhost:27017/diathymia', (err, db) => {
   if (err) throw err
