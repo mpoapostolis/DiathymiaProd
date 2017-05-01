@@ -54,7 +54,7 @@ class Home extends Component {
           underlineFocusStyle={{ borderColor:'rgb(0,135,192)' }}
           autoFocus
           onBlur = {() => {
-             postData('http://localhost:3001/existUsername', {name: this.refs.name.input.value})
+             postData('http://104.41.41.47:3001/existUsername', {name: this.refs.name.input.value})
             .then(data => data.found && this.setState({nameError: ` Το Όνομα: ${this.refs.name.input.value} υπάρχει`}))
           }}
           onFocus={() => { this.initPass(); this.setState({ nameError: '' }) }}

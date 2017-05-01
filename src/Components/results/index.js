@@ -16,7 +16,7 @@ class Results extends React.Component {
   }
   componentDidMount(){
     const { name } = this.props
-    fetch('http://localhost:3001/getResults').then(data => data.json()).then(info => this.setState({users: info.result}))
+    fetch('http://104.41.41.47:3001/getResults').then(data => data.json()).then(info => this.setState({users: info.result}))
   }
 
   getMean(arr, key){

@@ -78,7 +78,7 @@ const chat = (state = initialStateChat, action) => {
       const alexExt = R.sum([state.answers[4], state.answers[7], state.answers[9], state.answers[14], state.answers[15], state.answers[17], state.answers[18], state.answers[19]]) / 8
       state.alexCom = alexCom
       state.alexExt = alexExt
-      fetch('http://localhost:3001/addResult', {
+      fetch('http://104.41.41.47:3001/addResult', {
         method:'POST',
         headers: {
           'Content-Type': 'application/json',

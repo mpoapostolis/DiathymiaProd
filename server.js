@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const path = require('path')
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 
@@ -10,6 +11,13 @@ app.use( (req, res, next) => {
   next();
 })
 
+app.use('/', express.static(path.join(__dirname, 'build')))
+app.use('/signup', express.static(path.join(__dirname, 'build')))
+app.use('/login', express.static(path.join(__dirname, 'build')))
+app.use('/results', express.static(path.join(__dirname, 'build')))
+app.use('/graph', express.static(path.join(__dirname, 'build')))
+app.use('/chat', express.static(path.join(__dirname, 'build')))
+app.use('/error', express.static(path.join(__dirname, 'build')))
 
 MongoClient.connect('mongodb://localhost:27017/diathymia', (err, db) => {
   if (err) throw err

@@ -19,7 +19,7 @@ class Login extends Component {
     const { login,userLogin } = this.props
     const name = this.refs.name.input.value
     const password = this.refs.pass.input.value
-    fetch('http://localhost:3001/login', {
+    fetch('http://104.41.41.47:3001/login', {
       method:'POST',
       headers: {
         'Content-Type': 'application/json',

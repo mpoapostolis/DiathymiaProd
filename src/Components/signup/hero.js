@@ -18,7 +18,7 @@ class Hero extends Component {
   }
 
   renderHero () {
-    const url = 'http://localhost:3001/addUser'
+    const url = 'http://104.41.41.47:3001/addUser'
     const { account } = this.props
     const { hero, nextStep, login } = this.props
     if (hero === '') return null
