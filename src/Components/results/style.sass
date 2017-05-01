@@ -1,76 +1,8 @@
-.chatContainer
-  position: absolute
-  width: 97%
+.graphContainer
   display: flex
-  height: 87.5%
-  justify-content: space-between
-  // background: rgba(37, 126, 110, 0.39)
-  .mainHero
-    flex: 1
+  flex-direction: column
+  p,h1
+    text-align: center
+  .graph
     display: flex
-    flex-direction: column
-    justify-content: space-between
-    .answers
-      display: flex
-      flex-direction: row
-      justify-content: space-around
-      .answer
-        align-self: center
-        flex: 1
-        display: flex
-        justify-content: center
-        margin-right: 20px
-        background: rgba(8, 89, 173, 0.67)
-        padding: 1rem
-        color: rgb(240, 240, 240)
-        border-radius: 45px
-        cursor: pointer
-        font-weight: bolder
-        &:hover
-          background: rgba(8, 89, 173, 0.83)
-        &.locked
-          background: rgba(8, 89, 173, 0.53)
-          cursor: not-allowed
-
-    .hero
-      display: flex
-      justify-content: center
-      img
-        max-height: 80vh
-        max-width: 40vw
-  .chatBox
-    flex: 1
-    border-radius: 20px
-    box-shadow: 0 0 10px 2px rgba(4, 0, 0, 0.12)
-    background: rgba(255, 255, 255, 0.32)
-    overflow-x: hidden
-    display: flex
-    flex-direction: column-reverse
-    .message
-      min-height: 50px
-      display: flex
-      margin: 30px
-      &.user
-        animation: showMessage 0.25s forwards
-        justify-content: flex-end
-      &.hero
-        animation: showMessage 0.25s forwards
-        justify-content: flex-start
-
-=keyframes($name)
-  @-webkit-keyframes #{$name}
-    @content
-  @-moz-keyframes #{$name}
-    @content
-  @-ms-keyframes #{$name}
-    @content
-  @keyframes #{$name}
-    @content
-
-+keyframes(showMessage)
-  0%
-    transform: scale(2)
-    opacity: 0
-  100%
-    transform: scale(1)
-    opacity: 1
+    flex-wrap: wrap

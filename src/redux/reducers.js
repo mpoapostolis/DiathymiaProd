@@ -57,6 +57,7 @@ const view = (state = initialStateView, action) => {
 }
 
 const chat = (state = initialStateChat, action) => {
+  console.log(state.chatArr);
   switch (action.type) {
     case 'ANSWER':
       state = R.assoc('chatArr', [...state.chatArr, action.payload.text], state)
@@ -82,7 +83,7 @@ const chat = (state = initialStateChat, action) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body:JSON.stringify({data: {alexIde, alexCom, answers: state.answers, alexExt}, name: action.payload})
+        body:JSON.stringify({data: {alexIde, alexCom, chatArr: state.chatArr, alexExt}, name: action.payload})
       })
       state = R.assoc('alexIde', alexIde, state)
       return state

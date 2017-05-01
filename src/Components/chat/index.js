@@ -47,7 +47,7 @@ class Chat extends React.Component {
           canAnswer &&  this.props.answer({ text: obj.text, value: obj.value });
           setTimeout(()=>{
             canAnswer && this.props.nextQ()
-          }, 0)
+          }, 500)
         }}
         key = {key} className={`answer ${canAnswer ? '': 'locked'}`}> {obj.text} </div> )}
       </div>

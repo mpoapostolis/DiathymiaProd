@@ -16,11 +16,13 @@ const AppBarExampleIconButton = (props) => {
         onLeftIconButtonTouchTap ={() => props.toggleDrawer()}
         onRightIconButtonTouchTap ={() => props.toggleDialog()}
         iconElementRight={
+          <div className = 'barContainer'>
             <Avatar
-              icon={props.loggedIn ? null : <FontIcon  style={{color:'rgba(182, 198, 247, 0.62)'}}className='fa fa-user' />}
+              icon={props.loggedIn ? null : <FontIcon  style={{color:'rgba(216, 224, 249, 0.62)'}} className='fa fa-user' />}
               src={props.loggedIn ? `images/${props.hero}.png` : null}
               style ={{background:'rgba(245, 245, 245, 0.29)', textAlign:'center', marginTop:'5px', cursor: 'pointer'}}
             />
+          </div>
         }
       />
       <Drawer />
