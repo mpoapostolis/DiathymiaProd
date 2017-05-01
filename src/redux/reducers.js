@@ -57,7 +57,6 @@ const view = (state = initialStateView, action) => {
 }
 
 const chat = (state = initialStateChat, action) => {
-  console.log(state.chatArr);
   switch (action.type) {
     case 'ANSWER':
       state = R.assoc('chatArr', [...state.chatArr, action.payload.text], state)

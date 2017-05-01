@@ -10,7 +10,7 @@ import { browserHistory } from 'react-router'
 
 class DrawerUndockedExample extends React.Component {
   render() {
-    const { toggleDrawer, drawerOpen, loggedIn } = this.props
+    const { toggleDrawer, drawerOpen, loggedIn, isAdmin } = this.props
     return (
       <div>
         <Drawer
@@ -24,6 +24,7 @@ class DrawerUndockedExample extends React.Component {
           {!loggedIn ? <MenuItem onTouchTap={() => {toggleDrawer(); browserHistory.push('/signup')}}>Sign up</MenuItem> : null }
           {!loggedIn ? <MenuItem onTouchTap={() => {toggleDrawer(); browserHistory.push('/login')}}>Log in</MenuItem> : null }
           {loggedIn ? <MenuItem onTouchTap={() => {toggleDrawer(); browserHistory.push('/chat')}}>Chat</MenuItem> : null }
+          {isAdmin ? <MenuItem onTouchTap={() => {toggleDrawer(); browserHistory.push('/results')}}>Results</MenuItem> : null }
         </Drawer>
       </div>
     );
@@ -32,6 +33,7 @@ class DrawerUndockedExample extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    isAdmin: state.account.isAdmin,
     drawerOpen: state.view.drawerOpen,
     loggedIn: state.view.loggedIn,
   }

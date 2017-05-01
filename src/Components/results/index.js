@@ -7,6 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 var Chart = require('react-d3-core').Chart;
 import { LineChart, Line, CartesianGrid, YAxis, XAxis } from 'recharts';
 import './style.css'
+import { browserHistory } from 'react-router'
 
 class Results extends React.Component {
   state={
@@ -53,7 +54,6 @@ class Results extends React.Component {
     }
 
   chart(){
-    console.log(this.state.users);
     const { current, user } = this.state
     current.map((obj) => obj.date = new Date(obj.date).toLocaleDateString())
     let data = [{name:'alex identification', key:'alexIde'}, {name:'alex communication', key: 'alexCom'}, {name:'alexExt', key:'alexExt'}]
@@ -75,6 +75,8 @@ class Results extends React.Component {
 
   render (){
     const { current } = this.state
+    const { isAdmin } = this.props
+    !isAdmin ? browserHistory.push('/') : null
     return current.length ? this.chart() : this.renTable()
   }
 }
@@ -84,6 +86,7 @@ const mapStateToProps = (state) => {
     hero: state.account.hero,
     num: state.chat.num,
     name: state.account.userName,
+    isAdmin: state.account.isAdmin,
     chatArr: state.chat.chatArr,
     chat: state.chat
   }
