@@ -41,22 +41,6 @@ class BottomNavigationExampleSimple extends Component {
     const { selectedIndex } = this.state
     return (
       <div>
-        <Paper zDepth={1}>
-          <BottomNavigation selectedIndex={this.state.selectedIndex}>
-            <BottomNavigationItem
-              label="Home"
-              icon={<div/>}
-              style ={{background: selectedIndex === 0 ? 'rgba(38, 154, 204, 0.1)': '', color:'white', fontWeight:'bold'}}
-              onTouchTap={() => this.select(0)}
-            />
-            <BottomNavigationItem
-              label="Μαγαζί"
-              icon={<div/>}
-              style ={{background: selectedIndex === 1 ? 'rgba(38, 154, 204, 0.1)' : '', color:'white', fontWeight:'bold'}}
-              onTouchTap={() => this.select(1)}
-            />
-          </BottomNavigation>
-        </Paper>
         {this.whatRender()}
       </div>
     );
